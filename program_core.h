@@ -18,11 +18,11 @@ struct chemistry_Periodic_Elements{
 	char Symbol[5];
 	int Z;				//Number of protons.
 	float Atomic_Weight;
-	float c;
+	float c;			//Electronic Negativity.
 	char Elect_Confg[25];
 	int Groups;
-	int layer;
-	float mp;
+	int layer;			//Not very Necessary.
+	float mp;			//Melting Point. in Degrees Celsius.
 };
 // Important arrays and variables.
 struct chemistry_Periodic_Elements array[119];
@@ -31,12 +31,16 @@ int size_Of_Array;
 
 
 
-//Functions.
-void mixing();
+											//Functions.
+// gather_elements.c
 void print();
 void createArray();
-double get_Element_Value();
 void sort_Periodic_Table();
+
+//	element_search.c
+double get_Element_Value(char *element);
+void mixing();
 double getElement(char Symbol[], int subscript);
 double compund_element();
 int get_value_of_subscript(char *element, int l);
+double get_Total_Atomic_Weight(char *element, int size, int subscript);

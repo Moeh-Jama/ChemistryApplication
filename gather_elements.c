@@ -7,15 +7,21 @@
 
 /*
 	Author: Mohamed Jama.
-	Date: --/--/17.
-*/
+	Date: 18/04/17.
 
+	Functionality: The main file of the project. Here the user will choose what to do in 
+	the Application.
+
+	Features:
+		(1): Combine two Elements/Compounds.
+		(2): Print & Sort Periodic Table.
+		(3): Get Info on a particular Element.
+*/
 
 int iteration =0;
 void write_element_sheet();
 
-int print_greeting()
-{
+int print_greeting(){
 	if(iteration==0)
 	{
 		createArray();
@@ -26,8 +32,7 @@ int print_greeting()
 	printf("\t2.Print Periodic Table.\n");
 	printf("\t3.Sort Periodic listing.\n");
 	printf("\t4.Enter some element.\n");
-	printf("\t5.Group.\n");
-	printf("\t6.Exit\n");
+	printf("\t5.Exit\n");
 	int choice;
 	printf("\nEnter: ");
 	scanf("%d", &choice);
@@ -41,15 +46,20 @@ int main(void){
 	while (setTrue == 0)
 	{
 		int choice = print_greeting();
-		printf("\nLAST IS: %s\n", array[103].Element);
+		
 		switch(choice)
 		{
 			case 1: mixing(); break;
-			case 2: print(); break;
+			case 2: /*print();*/printf("Sorry on break!\n"); break;
 			case 3: sort_Periodic_Table(); break;
-			case 4: get = get_Element_Value(); break;
-			case 5: printf("Grouping: Not Completed!\n"); break;
-			case 6: printf("Goodbye!"); setTrue =1; break;
+			case 4:{
+				printf("Enter an element please, no spaces.\n");
+				char element[100];
+				scanf("%s", element);
+				get = get_Element_Value(element); 
+				break;
+			} 
+			case 5: printf("Goodbye!"); setTrue =1; break;
 			default: printf("Error Invalid Entry\n"); exit(0);
 		}
 	}
@@ -60,7 +70,7 @@ void write_element_sheet()
 {	
 	char space[] = "\n"; 
 	FILE *fptr;
-	if((fptr=fopen("properties_of_elements.txt", "w"))==NULL)
+	if((fptr=fopen("quick_save.txt", "w"))==NULL)
 	{
 		puts("File cannot be opened!");
 	}
@@ -85,16 +95,16 @@ void createArray()
 		while(!feof(fptr))
 		{
 			fscanf(fptr, "%d%d%s%s%d%f%s%f%f", &array[i].Groups, &array[i].layer, array[i].Element, array[i].Symbol, &array[i].Z, &array[i].Atomic_Weight, array[i].Elect_Confg, &array[i].mp, &array[i].c);
-			printf("[%f]\n", array[i].mp);
 			i++;
 		}
 		size_Of_Array=i;
 	}
 	fclose(fptr);
 }
+// This Function is Unnecessary and needs to be taken out.
 void sort_Periodic_Table()
 {
-	printf("CHoose a sorting method\tTo be Continued.\n");
+	printf("Choose a sorting method\tTo be Continued.\n");
 	struct chemistry_Periodic_Elements temp_two[103];
 	for(int i=0; i<size_Of_Array; i++)
 	{
