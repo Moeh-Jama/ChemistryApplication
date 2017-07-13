@@ -1,4 +1,6 @@
-import py_element_search as es
+import jamastry_calculations as es
+#import graphical_user_interface as gui
+import matplotlib.pyplot as plt 
 
 element_property={}
 array = []
@@ -17,7 +19,7 @@ def create_array():
 				'Symbol': take[3],
 				'Atomic_Number': float(take[4]),				
 				'Atomic_Weight':float(take[5]),
-				'Elect_Aff': take[8],			
+				'Elect_Aff': float(take[8]),			
 				'Elect_Confg': take[6],
 				'Groups': int(take[0]),
 				'layer': int(take[1]),			
@@ -26,6 +28,11 @@ def create_array():
 			# add element into the periodic array storeage.
 			array.append(element_property[take[4]])
 
+def begin():
+	create_array()
+
+"""
+			COMMAND LINE
 def main():
 	create_array()
 	user_active = True
@@ -50,6 +57,31 @@ def main():
 		elif int(user_input) == 5:
 			print("Goodybye")
 			user_active = False
+"""
+
+def get_element(element):
+	return es.get_compound_properties(element, array)
+
+def melting_stats():
+
+	
+
+	X_train = []
+	Y_train = []
+
+	for melt in array:
+		Y_train.append(float(melt['mp']))
+		X_train.append(float(melt['Atomic_Number']))
+
+	
+	plt.figure()
+
+	plt.ylabel("Melting Point (Celsius)")
+	plt.xlabel("Electron Affinity")
+	plt.scatter(X_train[:], Y_train[:], s=170, color="green")
+	#plt.imshow(y, x[, cmap = plt.cm.gray_r, interpolation='nearest')
+
+	plt.show()
 
 if __name__ == "__main__":
 	main()

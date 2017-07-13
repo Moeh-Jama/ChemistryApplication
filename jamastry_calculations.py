@@ -1,6 +1,8 @@
 import py_gather_elements as ge
+
 def get_compound_properties(compound, array):
 	print("Getting compound...")
+	total_atomic_weight=0
 	check_non_subscript = compound.isalpha()
 	print("Subscript in element is: "+ str(check_non_subscript))
 	number_of_elements = []
@@ -34,12 +36,13 @@ def get_compound_properties(compound, array):
 			if big_sub:
 				subscript = int(''.join(big_sub))
 			print("Subscript is: " + str(subscript))
-			search_array(''.join(save_element), subscript, array)
+			total_atomic_weight += search_array(''.join(save_element), subscript, array)
 			#print(compound[i])
 		i+=1
-		#print(save_element)
+	return total_atomic_weight
 def search_array(element, subscript, array):
 	print('Searching through array...')
 	for index in array:
 		if element == index['Symbol']:
 			print("The Atomic Weight of "+index['Element']+" is "+str(index['Atomic_Weight'] * subscript)+"g mol-1")
+			return (index['Atomic_Weight']*subscript)
