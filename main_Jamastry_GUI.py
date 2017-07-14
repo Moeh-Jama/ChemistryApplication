@@ -96,17 +96,22 @@ class GetCompoundMixture(tk.Frame):
 	def get_Result(self):
 		first_result = jcalc.get_compound_properties(str(self.first_entry.get()), jce.array)
 		second_result = jcalc.get_compound_properties(str(self.second_entry.get()), jce.array)
-		tota_result = first_result + second_result
-		message = "The Total Atomic Weight of the Compound is "+str(tota_result)+" g mol"
-		tkinter.messagebox.showinfo('stoichiometric calculation result', message)
+		total_result = first_result + second_result
+		message = "The Total Atomic Weight of the Compound is "+str(total_result)+" g mol"
+		#tkinter.messagebox.showinfo('stoichiometric calculation result', message)
 			
-		self.new_Label = tk.Label(self, text=)
+		self.new_Label = tk.Label(self, text=message)
+		self.new_Label.pack()
 
 def test_commands():
 	print("Successful Click")
 
 
+# Functions that must be created before the 
+# GUI is created.
 jce.begin()
+
+
 jamastry = BigBossGUI()
 jamastry.title("Jamastry, Chemistry Application")
 jamastry.minsize(width=400, height=400)
