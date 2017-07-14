@@ -1,4 +1,4 @@
-import py_gather_elements as ge
+#import py_gather_elements as ge
 
 def get_compound_properties(compound, array):
 	print("Getting compound...")

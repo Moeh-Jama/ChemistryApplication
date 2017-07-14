@@ -76,12 +76,13 @@ class GetCompoundMixture(tk.Frame):
 		label.pack(pady=12, padx=12)
 
 		self.first_entry = tk.Entry(self)
-		self.first_entry.pack(side="left")
+		self.first_entry.pack()
 
 		self.add_symbol = tk.Label(self, text=" + ")
-		label.pack(pady=2, padx=3)
+		self.add_symbol.pack(pady=2, padx=3)
+
 		self.second_entry = tk.Entry(self)
-		self.second_entry.pack(side="left")
+		self.second_entry.pack()
 
 		self.button_one = tk.Button(self, text="Combine Both Elements", command=self.get_Result)
 		self.button_one.pack()
@@ -90,12 +91,16 @@ class GetCompoundMixture(tk.Frame):
 								command=lambda:controller.display_window(MainPage))
 		self.button_two.pack()
 
+
+
 	def get_Result(self):
 		first_result = jcalc.get_compound_properties(str(self.first_entry.get()), jce.array)
 		second_result = jcalc.get_compound_properties(str(self.second_entry.get()), jce.array)
 		tota_result = first_result + second_result
 		message = "The Total Atomic Weight of the Compound is "+str(tota_result)+" g mol"
 		tkinter.messagebox.showinfo('stoichiometric calculation result', message)
+			
+		self.new_Label = tk.Label(self, text=)
 
 def test_commands():
 	print("Successful Click")
