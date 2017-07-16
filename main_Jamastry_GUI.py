@@ -1,6 +1,7 @@
 import tkinter as tk 
 import jamastry_create_elements as jce
 import jamastry_calculations as jcalc
+import balancing_equations as be
 import tkinter.messagebox
 
 class BigBossGUI(tk.Tk):
@@ -94,13 +95,18 @@ class GetCompoundMixture(tk.Frame):
 
 
 	def get_Result(self):
-		first_result = jcalc.get_compound_properties(str(self.first_entry.get()), jce.array)
-		second_result = jcalc.get_compound_properties(str(self.second_entry.get()), jce.array)
-		total_result = first_result + second_result
-		message = "The Total Atomic Weight of the Compound is "+str(total_result)+" g mol"
-		#tkinter.messagebox.showinfo('stoichiometric calculation result', message)
-			
-		self.new_Label = tk.Label(self, text=message)
+		# Getting user inputs.
+		first_compound = str(self.first_entry.get())
+		last_compound = str(self.second_entry.get())
+		# create one compound, balance it first.
+		new_compound = be.balance_front_end(first_compound, last_compound)
+		# get the atomic weight of the new single compound.
+		total_Atomic_Weight = be.get_single_element(str(new_compound), 2)
+
+		msg = "The Total Atomic Weight of the Compound is "+str(total_Atomic_Weight)+" g mol"
+
+		get_name = 'The Total mass of the compound ' + str(new_compound) + ' is '+str(total_Atomic_Weight)+' g mol'
+		self.new_Label = tk.Label(self, text=get_name)
 		self.new_Label.pack()
 
 def test_commands():

@@ -33,10 +33,20 @@ def begin():
 	"""
 	create_array()
 
+def return_element_name(compound):
+	""" Gets rid of subscripts in a compound
+		for example H2 is turned to H.	"""
+	no_subscript = ''.join([i for i in compound if not i.isdigit()])
 
-
-def get_element(element):
-	return es.get_compound_properties(element, array)
+	return no_subscript
+def return_element_digit(compound):
+	""" Only keeps the Subscripts in a compound
+		for example H2 is turned to 2 """
+	subscript = ''.join([i for i in compound if i.isdigit()])
+	if(subscript == ''):
+		return 0
+	else:
+		return subscript
 
 def melting_stats():
 	"""
@@ -60,7 +70,15 @@ def melting_stats():
 	plt.scatter(X_train[:], Y_train[:], s=170, color="green")
 	plt.show()
 
-create_array()
-
-for elem in array:
-	print(elem['mp'])
+def search_array(element, subscript):
+	""" Search through Array for element """
+	print('Searching through array...')
+	found = False
+	for index in array:
+		if element == index['Symbol']:
+			found = True
+			print("The Atomic Weight of "+index['Element']+" is "+str(index['Atomic_Weight'] * subscript)+"g mol-1")
+			return (index['Atomic_Weight']*subscript)
+	if found == False:
+		print('Element is not present in the Periodic Table !')
+		return -2017
