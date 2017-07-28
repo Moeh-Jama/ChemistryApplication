@@ -1,6 +1,5 @@
 import tkinter as tk 
 import jamastry_create_elements as jce
-import jamastry_calculations as jcalc
 import balancing_equations as be
 import tkinter.messagebox
 

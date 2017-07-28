@@ -1,8 +1,7 @@
-import jamastry_calculations as es
-#import graphical_user_interface as gui
 import matplotlib.pyplot as plt 
 import requests
-
+import math
+import time
 array = []
 def create_array():
 	# element_property is used to store the elements in the appropriate order.
@@ -12,7 +11,7 @@ def create_array():
 	# data are now sepereated and stored individually into ARRAY.
 	# With appropriate data types implemented.
 	for element in req_JSON_elements.json():
-		element_property[element['Atomic_Number']]={
+		element_property[element['Symbol']]={
 		'Element': element['Element'],
 		'Symbol': element['Symbol'],
 		'Atomic_Number': float(element['Atomic_Number']),				
@@ -24,14 +23,16 @@ def create_array():
 		'mp': float(element['mp']),
 		}
 		# data stored in the dict element_property is now stored in
-		# array. 
-		array.append(element_property[element['Atomic_Number']])
+		# the array. 
+		array.append(element_property[element['Symbol']])
 
 def begin():
 	""" Called from Tkinter in order to set up the array,
 						with the appropriate data
 	"""
 	create_array()
+	array = sort_array()
+	print('First')
 
 def return_element_name(compound):
 	""" Gets rid of subscripts in a compound
@@ -72,9 +73,13 @@ def melting_stats():
 
 def search_array(element, subscript):
 	""" Search through Array for element """
+	# Linear search is chosen due to the low number of elements, 
+	# thus being more efficent than other
+	# Searching methods like devide and conquer,
 	print('Searching through array...')
 	found = False
-	for index in array:
+	print(array)
+	for index in array:				# changed array to n_array, the sorted array.
 		if element == index['Symbol']:
 			found = True
 			print("The Atomic Weight of "+index['Element']+" is "+str(index['Atomic_Weight'] * subscript)+"g mol-1")
@@ -82,3 +87,25 @@ def search_array(element, subscript):
 	if found == False:
 		print('Element is not present in the Periodic Table !')
 		return -2017
+
+def sort_array():
+	""" Sort n_array by alphabeatical order of the Symbols."""
+	new_array = array.copy()
+	i=0
+	j=0
+	while i < len(new_array):
+
+		j=i+1
+		while j < len(new_array):
+
+			elem_1 = new_array[i]
+			elem_2 = new_array[j]
+			if elem_1['Symbol'] >elem_2['Symbol']:
+				temp = new_array[i]
+				new_array[i] = new_array[j]
+				new_array[j] = temp
+			j+=1
+		i+=1
+	for i in new_array:
+		print(i['Symbol'])
+	return new_array

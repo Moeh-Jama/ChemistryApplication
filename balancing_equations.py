@@ -6,7 +6,8 @@ current_compound = []
 
 def balance_front_end(compound_a, compound_b):
 	""" Balance both compounds."""
-	# import all Elements into an array
+	print("Balance front end....")
+	# import all Elements into an current_compund array.
 	get_single_element(compound_a, 1)
 	get_single_element(compound_b, 1)
 
@@ -27,16 +28,17 @@ def balance_front_end(compound_a, compound_b):
 			# compare the element names symbols.
 			if first_current_comp == last_current_comp:
 				# get compound subscripts
+				print("Found first and second comp.")
 				subscript_first = jce.return_element_digit(current_compound[i])
 				subscript_last = jce.return_element_digit(current_compound[j])
-
+				# if a subscript is single add 1 to the count.
+				if int(subscript_first) ==0:
+					count+=1
+				if int(subscript_last) == 0:
+					count+=1
 				if int(subscript_last) != 0 or int(subscript_first) != 0:
 					subscript += int(subscript_first) + int(subscript_last)
-				if (subscript_last == 0) or (subscript_first ==0):
-					count+= 1
-				else:
-					count = 0
-				#print('count is currently: '+ str(count))
+					count += 0
 				current_compound[i] = first_current_comp
 				current_compound.pop(j)
 			j+=1
@@ -52,6 +54,7 @@ def balance_front_end(compound_a, compound_b):
 	return current_compound
 
 def print_element(current_compound):
+	""" Print the resulting combination """
 	string_result = ''
 	i=0
 	for element in current_compound:
@@ -63,12 +66,18 @@ def print_element(current_compound):
 
 
 def get_single_element(compound, options):
+	""" This Function divides a compound to its simplist elements.
+		i.e. CAgCl is now ['C', 'Ag', 'Cl']
+	"""
+	print("Get single element....")
 	print(compound)
 	i = 0
 	total_atomic_weight = 0
 	while i < len(compound):
 		string = ''
 		if compound[i].isupper() and (i <= (len(compound))):
+			# There character is uppecase, therefore the beginning of
+			# A new element.
 			k = i+1
 			numbers = 0
 			string += compound[i]
@@ -86,14 +95,17 @@ def get_single_element(compound, options):
 					string += comp
 				k=k+1
 		if(string != ''):
+			# once we have a elment we do the following computations.
 			new_string = compound[i:k-numbers]
 			subscript = ''
 			subscript = jce.return_element_digit(compound[i:k])
 			if options ==1:
+				print('option 1')
 				if int(subscript) != 0:
 					new_string +=str(subscript)
 				current_compound.append(new_string)
 			elif options == 2:
+				print('option 2')
 				total_atomic_weight = jce.search_array(new_string, int(subscript))
 		i+=1
 	return total_atomic_weight
