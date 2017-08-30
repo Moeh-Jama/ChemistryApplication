@@ -1,8 +1,17 @@
-import tkinter as tk 
-import jamastry_create_elements as jce
-import balancing_equations as be
-import tkinter.messagebox
+import time
+now = time.time()
 
+import tkinter as tk 
+last = time.time()
+print('tkinter '+str(last-now)+'s')
+from jamastry_create_elements import create_periodic_table
+print('jce '+str(time.time() - last)+'s')
+eff = time.time()
+import balancing_equations as be
+print('be '+str(time.time() - eff)+'s')
+nower = time.time()
+import tkinter.messagebox
+print('msg '+str(time.time() - nower)+'s')
 class BigBossGUI(tk.Tk):
 
 	def __init__(self):
@@ -63,8 +72,8 @@ class Graphical(tk.Frame):
 		button_two.pack()
 
 	def get_graph(self):
-		jce.begin()
-		jce.melting_stats()
+	#	melting_stats()
+		print('Melting Stats')
 
 
 
@@ -91,14 +100,19 @@ class GetCompoundMixture(tk.Frame):
 								command=lambda:controller.display_window(MainPage))
 		self.button_two.pack()
 
-
-
 	def get_Result(self):
 		# Getting user inputs.
+		right_now = time.time()
 		first_compound = str(self.first_entry.get())
 		last_compound = str(self.second_entry.get())
 		# create one compound, balance it first.
-		new_compound = be.balance_front_end(first_compound, last_compound)
+		new_compound=''
+		if first_compound == '':
+			new_compound = be.balance_front_end('', last_compound)
+		elif last_compound == '':
+			new_compound = be.balance_front_end(first_compound, '')
+		else:
+			new_compound = be.balance_front_end(first_compound, last_compound)
 		# get the atomic weight of the new single compound.
 		total_Atomic_Weight = be.get_single_element(str(new_compound), 2)
 
@@ -107,6 +121,9 @@ class GetCompoundMixture(tk.Frame):
 		get_name = 'The Total mass of the compound ' + str(new_compound) + ' is '+str(total_Atomic_Weight)+' g mol'
 		self.new_Label = tk.Label(self, text=get_name)
 		self.new_Label.pack()
+		later_now = time.time()
+		elapsed_now = later_now - right_now
+		print('It took '+str(elapsed_now)+'s to compute this inquiry.')
 
 def test_commands():
 	print("Successful Click")
@@ -114,7 +131,10 @@ def test_commands():
 
 # Functions that must be created before the 
 # GUI is created.
-jce.begin()
+
+create_periodic_table()
+done = time.time() - now
+print("Elapsed time... %f seconds" % (done))
 
 
 jamastry = BigBossGUI()

@@ -1,9 +1,5 @@
-import jamastry_create_elements as jce
-
-
-#current_elements in a given compound.
+from jamastry_create_elements import quick_finder
 current_compound = []
-
 def balance_front_end(compound_a, compound_b):
 	""" Balance both compounds."""
 	print("Balance front end....")
@@ -22,15 +18,15 @@ def balance_front_end(compound_a, compound_b):
 			subscript_first = 0
 			subscript_last = 0
 			# get compound, names only.
-			first_current_comp = jce.return_element_name(current_compound[i])
-			last_current_comp = jce.return_element_name(current_compound[j])
+			first_current_comp = return_element_name(current_compound[i])
+			last_current_comp = return_element_name(current_compound[j])
 
 			# compare the element names symbols.
 			if first_current_comp == last_current_comp:
 				# get compound subscripts
 				print("Found first and second comp.")
-				subscript_first = jce.return_element_digit(current_compound[i])
-				subscript_last = jce.return_element_digit(current_compound[j])
+				subscript_first = return_element_digit(current_compound[i])
+				subscript_last = return_element_digit(current_compound[j])
 				# if a subscript is single add 1 to the count.
 				if int(subscript_first) ==0:
 					count+=1
@@ -87,9 +83,7 @@ def get_single_element(compound, options):
 					# If letter is uppercase then end loop.
 					break;
 				elif not comp.isalpha():
-					print(comp)
 					numbers+=1
-					#print(elem)
 				else:
 					# else add it to the array.
 					string += comp
@@ -98,7 +92,7 @@ def get_single_element(compound, options):
 			# once we have a elment we do the following computations.
 			new_string = compound[i:k-numbers]
 			subscript = ''
-			subscript = jce.return_element_digit(compound[i:k])
+			subscript = return_element_digit(compound[i:k])
 			if options ==1:
 				print('option 1')
 				if int(subscript) != 0:
@@ -106,10 +100,25 @@ def get_single_element(compound, options):
 				current_compound.append(new_string)
 			elif options == 2:
 				print('option 2')
-				total_atomic_weight = jce.search_array(new_string, int(subscript))
+				if int(subscript) == 0:
+					# so the atomic weight is not 0.
+					subscript = '1'
+				total_atomic_weight += quick_finder(new_string, int(subscript))
 		i+=1
 	return total_atomic_weight
 
-#current_compound.append((compound[i] + comp))
-"""hydrogen = 'He3Ag9Na7Cl5'
-balance_front_end(hydrogen, 'MoHe9Na120Cl7Ag')"""
+def return_element_name(compound):
+	""" Gets rid of subscripts in a compound
+		for example H2 is turned to H.	"""
+	no_subscript = ''.join([i for i in compound if not i.isdigit()])
+
+	return no_subscript
+def return_element_digit(compound):
+	""" Only keeps the Subscripts in a compound
+		for example H2 is turned to 2 """
+	subscript = ''.join([i for i in compound if i.isdigit()])
+	if(subscript == ''):
+		return 0
+	else:
+		return subscript
+
